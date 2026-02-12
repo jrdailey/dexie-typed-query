@@ -22,7 +22,7 @@
     "@typescript-eslint/parser": "^8.46.1",
     "@vitest/coverage-v8": "^4.0.18",
     "dexie": "^4.0.0",
-    "eslint": "^9.36.0",
+    "eslint": "^10.0.0",
     "eslint-plugin-vitest": "^0.5.4",
     "fake-indexeddb": "^6.2.5",
     "typescript": "^5.9.3",
