@@ -1,0 +1,24 @@
+import 'fake-indexeddb/auto'
+
+import Dexie, { EntityTable } from 'dexie'
+import { User } from './user'
+
+export type TestDB = Dexie & {
+  users: EntityTable<User, 'id'>,
+}
+
+export const buildDb = (name: string = `TestDB-${Date.now()}`): TestDB => {
+  const db = new Dexie(name) as TestDB
+
+  db.version(1).stores({
+    users: '&id, createdAt, updatedAt, [name+dob], email, subscriptionStatus, loginAttempts',
+  })
+
+  return db
+}
+
+export const resetDb = async (db: TestDB) => {
+  await db.delete()
+  await db.open()
+}
+

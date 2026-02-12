@@ -1,0 +1,32 @@
+{
+  "name": "dexie-typed-query",
+  "version": "1.0.0",
+  "author": "Jon Dailey",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "peerDependencies": {
+    "dexie": "^3.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@stylistic/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/eslint-plugin": "^8.44.0",
+    "@typescript-eslint/parser": "^8.46.1",
+    "@vitest/coverage-v8": "^4.0.18",
+    "dexie": "^4.0.0",
+    "eslint": "^9.36.0",
+    "eslint-plugin-vitest": "^0.5.4",
+    "fake-indexeddb": "^6.2.5",
+    "typescript": "^5.9.3",
+    "uuid": "^13.0.0",
+    "vitest": "^4.0.18"
+  }
+}
