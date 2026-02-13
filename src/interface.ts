@@ -1,4 +1,4 @@
-import { AtLeastTwo, ExactlyOne, ExactlyOneKey, ExactlyTwo, SingleRecord, StringKeyOf } from '@listoration/shared/utility-types'
+import { AtLeastTwo, ExactlyOne, ExactlyOneKey, ExactlyTwo, SingleRecord, StringKeyOf } from './utilityTypes'
 import { Collection, IDType, InsertType, WhereClause } from 'dexie'
 
 export type ScalarOp = 'equals' | 'notEqual'
@@ -25,7 +25,6 @@ export type AnyOpValueMap<T> =
   | SingleRecord<PairOp, ExactlyTwo<T>>
 
 export type OpValueMap<T> =
-  // Only allow string values to use string ops
   T extends string ? SingleRecord<StringOp, string> | AnyOpValueMap<T> :
     T extends number | Date ? SingleRecord<NumberOrDateOp, number | Date> | AnyOpValueMap<T> :
       AnyOpValueMap<T>

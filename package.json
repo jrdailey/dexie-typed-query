@@ -10,7 +10,8 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "npx tsc --noEmit"
   },
   "peerDependencies": {
     "dexie": "^3.0.0"
@@ -27,6 +28,6 @@
     "fake-indexeddb": "^6.2.5",
     "typescript": "^5.9.3",
     "uuid": "^13.0.0",
-    "vitest": "^4.0.18"
+    "vitest": "4.0.18"
   }
 }
