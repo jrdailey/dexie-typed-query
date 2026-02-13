@@ -29,7 +29,7 @@ export default [
       'vitest/expect-expect': [
         'error',
         {
-          'assertFunctionNames': ['expect', 'expectValid', 'expectInvalid'],
+          'assertFunctionNames': ['expect', 'expectValid', 'expectInvalid', 'expectTypeOf'],
         },
       ],
       '@stylistic/comma-dangle': ['error', 'always-multiline'],
