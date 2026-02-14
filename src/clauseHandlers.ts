@@ -1,9 +1,21 @@
 import { FlatFieldCondition, OpHandler } from './interface'
 import { IndexableTypePart } from 'dexie'
 
-// TODO: Handle anyOf and anyOfIgnoreCase
 export const getClauseHandler = <T, K extends keyof T>(condition: FlatFieldCondition<T>): OpHandler<T, K> => {
   switch (condition.op) {
+    case 'anyOf': return {
+      handleWhere: (clause) => clause.anyOf(condition.value as IndexableTypePart[]),
+      handleFilter: (objectValue) => condition.value.includes(objectValue),
+    }
+    case 'anyOfIgnoreCase': return {
+      handleWhere: (clause) => clause.anyOfIgnoreCase(condition.value),
+      handleFilter: (objectValue) => {
+        const downcasedConditionArray = condition.value.map(e => e.toLowerCase())
+        const downcasedObjectValue = (objectValue as string).toLowerCase()
+
+        return downcasedConditionArray.includes(downcasedObjectValue)
+      },
+    }
     case 'equals': return {
       handleWhere: (clause) => clause.equals(condition.value as IndexableTypePart),
       handleFilter: (objectValue) => {
