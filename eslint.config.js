@@ -46,8 +46,9 @@ export default [
         },
         'multilineDetection': 'brackets',
       }],
-      '@stylistic/semi': ['error', 'never'],
+      '@stylistic/object-curly-spacing': ['error', 'always'],
       '@stylistic/quotes': ['error', 'single'],
+      '@stylistic/semi': ['error', 'never'],
     },
   },
 ]
