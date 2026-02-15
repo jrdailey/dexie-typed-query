@@ -1,6 +1,6 @@
 import type { Collection, EntityTable, IDType, InsertType } from 'dexie'
 import type { FlatFieldCondition, LogicalQuery, NestedFieldCondition, OpValueMap, OrderByDirection, TypedQueryInterface } from './interface'
-import { getClauseHandler } from './clauseHandlers'
+import { getClauseHandlers } from './clauseHandlers'
 
 const flattenNestedFieldCondition = <T>(
   nestedConditions: NestedFieldCondition<T>,
@@ -27,11 +27,11 @@ const applyCondition = <T, K extends keyof T>(
   // Handle ORs
   if ('or' in condition) {
     const [firstCondition, ...remaining] = flattenNestedFieldConditionList(condition.or)
-    let opHandler = getClauseHandler<T, K>(firstCondition)
+    let opHandler = getClauseHandlers<T, K>(firstCondition)
     let result = opHandler.handleWhere(query.where(firstCondition.field))
 
     for (const nextCondition of remaining) {
-      opHandler = getClauseHandler<T, K>(nextCondition)
+      opHandler = getClauseHandlers<T, K>(nextCondition)
 
       result = opHandler.handleWhere(result.or(nextCondition.field))
     }
@@ -43,13 +43,13 @@ const applyCondition = <T, K extends keyof T>(
   if ('and' in condition) {
     const [firstCondition, ...remaining] = flattenNestedFieldConditionList(condition.and)
 
-    let opHandler = getClauseHandler<T, K>(firstCondition)
+    let opHandler = getClauseHandlers<T, K>(firstCondition)
 
     // Use first condition for the initial query
     return opHandler.handleWhere(query.where(firstCondition.field)).and(object => {
       // Use remaining conditions to find objects that meet all conditions
       return remaining.every(nextCondition => {
-        opHandler = getClauseHandler(nextCondition)
+        opHandler = getClauseHandlers(nextCondition)
 
         return opHandler.handleFilter(object[nextCondition.field])
       })
@@ -58,7 +58,7 @@ const applyCondition = <T, K extends keyof T>(
 
   // Handle single condition
   const flatCondition = flattenNestedFieldCondition(condition)
-  const opHandler = getClauseHandler<T, K>(flatCondition)
+  const opHandler = getClauseHandlers<T, K>(flatCondition)
 
   return opHandler.handleWhere(query.where(flatCondition.field))
 }
@@ -87,7 +87,6 @@ export const typedQuery = <T, K extends keyof T>(table: EntityTable<T, K>): Type
 
       return query.toArray()
     },
-    // TODO: support compound indexes. Maybe check automatically if a compound index exists when ANDing. https://dexie.org/docs/Compound-Index
     where: async (condition, options) => {
       let query = applyCondition(table, condition)
 

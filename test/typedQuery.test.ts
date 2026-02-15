@@ -299,6 +299,8 @@ describe('typedQuery', () => {
       })
     })
 
+    // TODO: add tests for betweenIncludeLower, betweenIncludeUpper, betweenIncludeLowerAndUpper
+
     describe('in', () => {
       it('can query numbers', async () => {
         const result = await typedQuery(db.users).where({

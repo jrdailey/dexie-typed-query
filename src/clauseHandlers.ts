@@ -1,11 +1,19 @@
 import type { FlatFieldCondition, OpHandler } from './interface'
 import type { IndexableTypePart } from 'dexie'
 
-export const getClauseHandler = <T, K extends keyof T>(condition: FlatFieldCondition<T>): OpHandler<T, K> => {
+export const getClauseHandlers = <T, K extends keyof T>(condition: FlatFieldCondition<T>): OpHandler<T, K> => {
   switch (condition.op) {
     case 'anyOf': return {
       handleWhere: (clause) => clause.anyOf(condition.value as IndexableTypePart[]),
-      handleFilter: (objectValue) => condition.value.includes(objectValue),
+      handleFilter: (objectValue) => {
+        if (objectValue instanceof Date) {
+          const mappedConditionValues = condition.value.map(d => (d as Date).getDate())
+
+          return mappedConditionValues.includes((objectValue as Date).getDate())
+        }
+
+        return condition.value.includes(objectValue)
+      },
     }
     case 'anyOfIgnoreCase': return {
       handleWhere: (clause) => clause.anyOfIgnoreCase(condition.value),
@@ -62,12 +70,48 @@ export const getClauseHandler = <T, K extends keyof T>(condition: FlatFieldCondi
       handleWhere: (clause) => {
         const [lower, upper] = condition.value
 
-        return clause.between(lower, upper)
+        return clause.between(lower, upper, false, false)
       },
       handleFilter: (objectValue) => {
         const [lower, upper] = condition.value
 
         return lower < objectValue && objectValue < upper
+      },
+    }
+    case 'betweenIncludeLower': return {
+      handleWhere: (clause) => {
+        const [lower, upper] = condition.value
+
+        return clause.between(lower, upper, true, false)
+      },
+      handleFilter: (objectValue) => {
+        const [lower, upper] = condition.value
+
+        return lower <= objectValue && objectValue < upper
+      },
+    }
+    case 'betweenIncludeUpper': return {
+      handleWhere: (clause) => {
+        const [lower, upper] = condition.value
+
+        return clause.between(lower, upper, false, true)
+      },
+      handleFilter: (objectValue) => {
+        const [lower, upper] = condition.value
+
+        return lower < objectValue && objectValue <= upper
+      },
+    }
+    case 'betweenIncludeLowerAndUpper': return {
+      handleWhere: (clause) => {
+        const [lower, upper] = condition.value
+
+        return clause.between(lower, upper, true, true)
+      },
+      handleFilter: (objectValue) => {
+        const [lower, upper] = condition.value
+
+        return lower <= objectValue && objectValue <= upper
       },
     }
     case 'in': return {
