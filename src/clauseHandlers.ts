@@ -1,5 +1,5 @@
-import { FlatFieldCondition, OpHandler } from './interface'
-import { IndexableTypePart } from 'dexie'
+import type { FlatFieldCondition, OpHandler } from './interface'
+import type { IndexableTypePart } from 'dexie'
 
 export const getClauseHandler = <T, K extends keyof T>(condition: FlatFieldCondition<T>): OpHandler<T, K> => {
   switch (condition.op) {

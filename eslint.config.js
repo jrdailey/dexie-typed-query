@@ -32,6 +32,7 @@ export default [
           'assertFunctionNames': ['expect', 'expectValid', 'expectInvalid', 'expectTypeOf'],
         },
       ],
+      '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
       '@stylistic/comma-dangle': ['error', 'always-multiline'],
       '@stylistic/eol-last': ['error', 'always'],
       '@stylistic/indent': ['error', 2],
