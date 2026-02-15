@@ -1,5 +1,5 @@
-import { Collection, EntityTable, IDType, InsertType } from 'dexie'
-import { FlatFieldCondition, LogicalQuery, NestedFieldCondition, OpValueMap, OrderByDirection, TypedQueryInterface } from './interface'
+import type { Collection, EntityTable, IDType, InsertType } from 'dexie'
+import type { FlatFieldCondition, LogicalQuery, NestedFieldCondition, OpValueMap, OrderByDirection, TypedQueryInterface } from './interface'
 import { getClauseHandler } from './clauseHandlers'
 
 const flattenNestedFieldCondition = <T>(

@@ -1,7 +1,8 @@
 import 'fake-indexeddb/auto'
 
-import Dexie, { EntityTable } from 'dexie'
-import { User } from './user'
+import Dexie from 'dexie'
+import type { EntityTable } from 'dexie'
+import type { User } from './user'
 
 export type TestDB = Dexie & {
   users: EntityTable<User, 'id'>,

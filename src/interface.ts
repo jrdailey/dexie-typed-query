@@ -1,5 +1,5 @@
-import { AtLeastTwo, ExactlyOne, ExactlyOneKey, ExactlyTwo, SingleRecord, StringKeyOf } from './utilityTypes'
-import { Collection, IDType, InsertType, WhereClause } from 'dexie'
+import type { AtLeastTwo, ExactlyOne, ExactlyOneKey, ExactlyTwo, SingleRecord, StringKeyOf } from './utilityTypes'
+import type { Collection, IDType, InsertType, WhereClause } from 'dexie'
 
 export type UniversalOp = 'anyOf'
 export type ScalarOp = 'equals' | 'notEqual'

@@ -1,4 +1,4 @@
-import { DexieWhereClause, FlatFieldCondition } from '../src'
+import type { DexieWhereClause, FlatFieldCondition } from '../src'
 import { getClauseHandler } from '../src/clauseHandlers'
 
 describe('getClauseHandlers', () => {
