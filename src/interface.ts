@@ -4,7 +4,7 @@ import type { Collection, IDType, InsertType, WhereClause } from 'dexie'
 export type UniversalOp = 'anyOf'
 export type ScalarOp = 'equals' | 'notEqual'
 export type NumberOrDateOp = 'below' | 'belowOrEqual' | 'above' | 'aboveOrEqual'
-export type PairOp = 'between'
+export type PairNumberOrDateOp = 'between' | 'betweenIncludeLower' | 'betweenIncludeUpper' | 'betweenIncludeLowerAndUpper'
 export type ArrayOp = 'in' | 'notIn'
 export type StringOp = 'equalsIgnoreCase' | 'startsWith' | 'startsWithIgnoreCase'
 export type StringArrayOp = 'anyOfIgnoreCase'
@@ -23,18 +23,17 @@ export type FlatFieldCondition<T, F extends StringKeyOf<T> = StringKeyOf<T>> =
   | { field: F, op: StringArrayOp, value: string[] }
   | { field: F, op: NumberOrDateOp, value: number | Date }
   | { field: F, op: ArrayOp, value: AtLeastTwo<T[F]> }
-  | { field: F, op: PairOp, value: ExactlyTwo<T[F]> }
+  | { field: F, op: PairNumberOrDateOp, value: ExactlyTwo<number | Date> }
 
 export type AnyOpValueMap<T> =
   | SingleRecord<UniversalOp, AtLeastTwo<T>>
   | SingleRecord<ScalarOp, ExactlyOne<T>>
   | SingleRecord<ArrayOp, AtLeastTwo<T>>
-  | SingleRecord<PairOp, ExactlyTwo<T>>
 
 export type OpValueMap<T> =
   T extends string ? SingleRecord<StringOp, string> | AnyOpValueMap<T> :
     T extends string[] ? SingleRecord<StringArrayOp, string[]> :
-      T extends number | Date ? SingleRecord<NumberOrDateOp, number | Date> | AnyOpValueMap<T> :
+      T extends number | Date ? SingleRecord<NumberOrDateOp, number | Date> | SingleRecord<PairNumberOrDateOp, ExactlyTwo<number | Date>> | AnyOpValueMap<T> :
         AnyOpValueMap<T>
 
 export type NestedFieldCondition<T> = ExactlyOneKey<{
@@ -53,7 +52,6 @@ export interface QueryOptions<T> {
   limit?: number,
   offset?: number,
 }
-
 
 export interface TypedQueryInterface<T> {
   /**
