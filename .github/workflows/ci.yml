@@ -28,9 +28,3 @@ jobs:
 
       - name: Run tests with coverage
         run: npm run test:coverage
-
-      - name: Generate Coverage Badges
-        uses: jpb06/coverage-badges-action@latest
-        with:
-          branches: main
-          badges-icon: vitest
