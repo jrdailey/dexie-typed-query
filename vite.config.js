@@ -13,6 +13,7 @@ export default defineConfig({
         statements: 100,
       },
       perfFile: true,
+      reporter: ['text', 'json', 'html', 'json-summary'],
     },
     typecheck: {
       enabled: true,
