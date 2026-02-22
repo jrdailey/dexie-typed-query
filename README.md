@@ -10,7 +10,7 @@ With vanilla Dexie:
 ```typescript
 const query = await db.users.where('name')
   .startsWith('T')
-  .and(u => u.createdAt <= new Date())
+  .and(u => u.createdAt < new Date())
   .reverse()
   .sortBy('createdAt')
 
@@ -24,7 +24,7 @@ const result = await typedQuery(db.users).where({
   and: [{
     name: { startsWith: 'T' },
   }, {
-    createdAt: { belowOrEqual: new Date() },
+    createdAt: { below: new Date() },
   }],
 }, { offset: 1, limit: 1, orderBy: { createdAt: 'desc' } })
 ```
