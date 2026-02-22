@@ -33,7 +33,7 @@ const result = await typedQuery(db.users).where({
 - __Declarative query interface__: Replace complex method chains with a single, readable query object.
 - __Easy Adoption__: Drop it into an existing Dexie project without refactoring your entire database layer.
 - __Deep Type Safety__:
-  - __Property-aware 0perators__: Only see operators that make sense for your data type (e.g., no `startsWith` on numbers/dates).
+  - __Property-aware operators__: Only see operators that make sense for your data type (e.g., no `startsWith` on numbers/dates).
   - __Validated condition values__: The type system takes into account both the property type and the selected operator. For example, using `between` on a date property will require a tuple of dates.
 - __Lightweight__: Zero dependencies (only a peer dependency on Dexie).
 - __Production Ready__: 100% test coverage.
