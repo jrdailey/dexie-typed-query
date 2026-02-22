@@ -33,7 +33,7 @@ const result = await typedQuery(db.users).where({
 - __Declarative query interface__: Replace complex method chains with a single, readable query object.
 - __Easy Adoption__: Drop it into an existing Dexie project without refactoring your entire database layer.
 - __Deep Type Safety__:
-  - __Property-aware 0perators__: Only see operators that make sense for your data type (e.g., no startsWith on numbers/dates).
+  - __Property-aware 0perators__: Only see operators that make sense for your data type (e.g., no `startsWith` on numbers/dates).
   - __Validated condition values__: The type system takes into account both the property type and the selected operator. For example, using `between` on a date property will require a tuple of dates.
 - __Lightweight__: Zero dependencies (only a peer dependency on Dexie).
 - __Production Ready__: 100% test coverage.
@@ -42,7 +42,11 @@ const result = await typedQuery(db.users).where({
 This is not a replacement for Dexie, and you may still need to use vanilla Dexie for more advanced queries.
 
 ## Installation
-TODO
+Requirements: Dexie 4.x
+
+```bash
+npm install dexie-typed-query
+```
 
 ## Usage
 TODO
