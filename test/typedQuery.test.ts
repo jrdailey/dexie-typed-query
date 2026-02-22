@@ -291,15 +291,70 @@ describe('typedQuery', () => {
 
       it('can query dates', async () => {
         const result = await typedQuery(db.users).where({
-          createdAt: { between: [daysFromNow(-5), daysFromNow(-2)] },
+          createdAt: { between: [daysFromNow(-5), userTwo.createdAt] },
+        })
+
+        expect(result).toEqual([userOne])
+      })
+    })
+
+    describe('betweenIncludeLower', () => {
+      it('can query numbers', async () => {
+        const result = await typedQuery(db.users).where({
+          loginAttempts: { betweenIncludeLower: [1, 4] },
+        })
+
+        expect(result.length).toEqual(2)
+        expect(result).toEqual(expect.arrayContaining([userOne, userTwo]))
+      })
+
+      it('can query dates', async () => {
+        const result = await typedQuery(db.users).where({
+          createdAt: { betweenIncludeLower: [userOne.createdAt, userTwo.createdAt] },
+        })
+
+        expect(result).toEqual([userOne])
+      })
+    })
+
+    describe('betweenIncludeUpper', () => {
+      it('can query numbers', async () => {
+        const result = await typedQuery(db.users).where({
+          loginAttempts: { betweenIncludeUpper: [1, 4] },
+        })
+
+        expect(result.length).toEqual(2)
+        expect(result).toEqual(expect.arrayContaining([userOne, userThree]))
+      })
+
+      it('can query dates', async () => {
+        const result = await typedQuery(db.users).where({
+          createdAt: { betweenIncludeUpper: [userOne.createdAt, userTwo.createdAt] },
+        })
+
+        expect(result).toEqual([userTwo])
+      })
+    })
+
+    describe('betweenIncludeLowerAndUpper', () => {
+      it('can query numbers', async () => {
+        const result = await typedQuery(db.users).where({
+          loginAttempts: { betweenIncludeLowerAndUpper: [1, 4] },
+        })
+
+        expect(result.length).toEqual(3)
+        expect(result).toEqual(expect.arrayContaining([userOne, userTwo, userThree]))
+      })
+
+      it('can query dates', async () => {
+        const result = await typedQuery(db.users).where({
+          createdAt: { betweenIncludeLowerAndUpper: [userOne.createdAt, userTwo.createdAt] },
         })
 
         expect(result.length).toEqual(2)
         expect(result).toEqual(expect.arrayContaining([userOne, userTwo]))
       })
     })
-
-    // TODO: add tests for betweenIncludeLower, betweenIncludeUpper, betweenIncludeLowerAndUpper
 
     describe('in', () => {
       it('can query numbers', async () => {
