@@ -418,7 +418,9 @@ describe('typedQuery', () => {
           and: [{
             createdAt: { between: [daysFromNow(-5), daysFromNow(-1)] },
           }, {
-            name: { startsWith: 'User T' },
+            name: { startsWith: 'User' },
+          }, {
+            loginAttempts: { below: 2 },
           }],
         })
 
@@ -519,11 +521,13 @@ describe('typedQuery', () => {
             createdAt: { equals: userOne.createdAt },
           }, {
             name: { equals: userTwo.name },
+          }, {
+            loginAttempts: { above: 3 },
           }],
         })
 
-        expect(result.length).toEqual(2)
-        expect(result).toEqual(expect.arrayContaining([userOne, userTwo]))
+        expect(result.length).toEqual(3)
+        expect(result).toEqual(expect.arrayContaining([userOne, userTwo, userThree]))
       })
 
       describe('query options', () => {
