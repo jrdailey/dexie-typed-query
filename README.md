@@ -1,7 +1,7 @@
 # Dexie Typed Query
 Dexie is great, but its TypeScript support and query interface leave something to be desired.
 
-This package aims to alleviate this by offering a lightweight, typesafe query wrapper.
+This project aims to alleviate this by offering a lightweight, type-safe query wrapper.
 
 ## Introduction
 ### Example
@@ -32,11 +32,11 @@ const result = await typedQuery(db.users).where({
 ### Features
 - __Declarative query interface__: Replace complex method chains with a single, readable query object.
 - __Easy Adoption__: Drop it into an existing Dexie project without refactoring your entire database layer.
-- Full type support
+- __Deep Type Safety__:
   - __Property-aware 0perators__: Only see operators that make sense for your data type (e.g., no startsWith on numbers/dates).
   - __Validated condition values__: The type system takes into account both the property type and the selected operator. For example, using `between` on a date property will require a tuple of dates.
-- Zero dependencies (just a peer dependency on Dexie)
-- 100% test coverage
+- __Lightweight__: Zero dependencies (only a peer dependency on Dexie).
+- __Production Ready__: 100% test coverage.
 
 ### Caveats
 This is not a replacement for Dexie, and you may still need to use vanilla Dexie for more advanced queries.
