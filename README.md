@@ -20,7 +20,7 @@ const query = await db.users.where('name')
   .reverse()
   .sortBy('createdAt')
 
-const result = query.slice(1).slice(0, 1)
+const result = query.slice(1, 11)
 ```
 
 With dexie-typed-query:
@@ -32,7 +32,7 @@ const result = await typedQuery(db.users).where({
   }, {
     createdAt: { below: new Date() },
   }],
-}, { offset: 1, limit: 1, orderBy: { createdAt: 'desc' } })
+}, { offset: 1, limit: 10, orderBy: { createdAt: 'desc' } })
 ```
 
 ### Features
