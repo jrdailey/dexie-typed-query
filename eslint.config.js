@@ -7,7 +7,7 @@ import vitestPlugin from 'eslint-plugin-vitest'
 export default [
   {
     files: ['**/*.{ts,js}'],
-    ignore: ['dist'],
+    ignores: ['dist/**/*'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: {
