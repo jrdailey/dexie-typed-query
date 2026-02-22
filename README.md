@@ -42,7 +42,7 @@ const result = await typedQuery(db.users).where({
 This is not a replacement for Dexie, and you may still need to use vanilla Dexie for more advanced queries.
 
 ## Installation
-Requirements: Dexie 4.x
+Requirements: `dexie@^4.0.0`
 
 ```bash
 npm install dexie-typed-query
