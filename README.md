@@ -1,3 +1,9 @@
+![Branches](./badges/coverage-branches.svg)
+![Functions](./badges/coverage-functions.svg)
+![Lines](./badges/coverage-lines.svg)
+![Statements](./badges/coverage-statements.svg)
+![Coverage total](./badges/coverage-total.svg)
+
 # Dexie Typed Query
 Dexie is great, but its TypeScript support and query interface leave something to be desired.
 
