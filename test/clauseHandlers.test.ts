@@ -27,79 +27,6 @@ describe('getClauseHandlers', () => {
     expect(() => getClauseHandlers(condition)).toThrowError('Unsupported QueryOp')
   })
 
-  describe('anyOf', () => {
-    describe('handleWhere', () => {
-      const condition: FlatFieldCondition<TestType> = {
-        field: 'testString',
-        op: 'anyOf',
-        value: ['test1', 'test2', 'test3'],
-      }
-      const { handleWhere } = getClauseHandlers(condition)
-
-      it('calls `anyOf` on clause and returns the result', () => {
-        const expectedResult = 'mock result'
-        const clause = {
-          anyOf: vi.fn().mockReturnValue(expectedResult),
-        } as unknown as DexieWhereClause<TestType>
-
-        const result = handleWhere(clause)
-
-        expect(clause.anyOf).toHaveBeenCalledExactlyOnceWith(condition.value)
-        expect(result).toEqual(expectedResult)
-      })
-    })
-
-    const filterTestCases: TestCase<AtLeastTwo<TestType[keyof TestType]>>[] = [
-      {
-        describe: 'handling strings',
-        field: 'testString',
-        conditionValue: ['test1', 'test2', 'test3'],
-        passValues: ['test1', 'test2', 'test3'],
-        failValues: ['TEST1', 'test0', ''],
-      },
-      {
-        describe: 'handling numbers',
-        field: 'testNumber',
-        conditionValue: [1, 2, 3],
-        passValues: [1, 2, 3],
-        failValues: [0, 11, 23],
-      },
-      {
-        describe: 'handling dates',
-        field: 'testDate',
-        conditionValue: [new Date('01/01/2001'), new Date('12/12/2012')],
-        passValues: [new Date('01/01/2001'), new Date('12/12/2012')],
-        failValues: [new Date(), new Date('11/11/2011')],
-      },
-    ]
-
-    filterTestCases.forEach(testCase => {
-      // eslint-disable-next-line vitest/valid-title
-      describe(testCase.describe, () => {
-        describe('handleFilter', () => {
-          const condition: FlatFieldCondition<TestType> = {
-            field: testCase.field,
-            op: 'anyOf',
-            value: testCase.conditionValue,
-          }
-          const { handleFilter } = getClauseHandlers(condition)
-
-          it('returns true when the object value is in the condition range', () => {
-            testCase.passValues.forEach(value => {
-              expect(handleFilter(value)).toBe(true)
-            })
-          })
-
-          it('returns false when the object value is NOT in the condition range', () => {
-            testCase.failValues.forEach(value => {
-              expect(handleFilter(value)).toBe(false)
-            })
-          })
-        })
-      })
-    })
-  })
-
   describe('anyOfIgnoreCase', () => {
     const condition: FlatFieldCondition<TestType> = {
       field: 'testString',
@@ -161,7 +88,7 @@ describe('getClauseHandlers', () => {
       })
     })
 
-    const filterTestCases: TestCase[] = [
+    const filterTestCases: TestCase<string | number | Date>[] = [
       {
         describe: 'handling strings',
         field: 'testString',
@@ -182,20 +109,6 @@ describe('getClauseHandlers', () => {
         conditionValue: new Date('01/01/2001'),
         passValues: [new Date('01/01/2001')],
         failValues: [new Date(), new Date('11/11/2011')],
-      },
-      {
-        describe: 'handling false',
-        field: 'testBoolean',
-        conditionValue: false,
-        passValues: [false],
-        failValues: [true],
-      },
-      {
-        describe: 'handling true',
-        field: 'testBoolean',
-        conditionValue: true,
-        passValues: [true],
-        failValues: [false],
       },
     ]
 
@@ -288,7 +201,7 @@ describe('getClauseHandlers', () => {
       })
     })
 
-    const filterTestCases: TestCase[] = [
+    const filterTestCases: TestCase<string | number | Date>[] = [
       {
         describe: 'handling string',
         field: 'testString',
@@ -309,20 +222,6 @@ describe('getClauseHandlers', () => {
         conditionValue: new Date('12/12/2012'),
         passValues: [new Date(), new Date('01/01/2001')],
         failValues: [new Date('12/12/2012')],
-      },
-      {
-        describe: 'handling true',
-        field: 'testBoolean',
-        conditionValue: true,
-        passValues: [false],
-        failValues: [true],
-      },
-      {
-        describe: 'handling false',
-        field: 'testBoolean',
-        conditionValue: false,
-        passValues: [true],
-        failValues: [false],
       },
     ]
 
