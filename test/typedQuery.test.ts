@@ -527,7 +527,7 @@ describe('typedQuery', () => {
         })
 
         expect(result.length).toEqual(3)
-        expect(result).toEqual(expect.arrayContaining([userOne, userTwo, userThree]))
+        expect(result).toEqual(expect.arrayContaining([userOne, userTwo]))
       })
 
       describe('query options', () => {

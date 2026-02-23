@@ -1,13 +1,12 @@
 import type { AtLeastTwo, ExactlyOne, ExactlyOneKey, ExactlyTwo, SingleRecord, StringKeyOf } from './utilityTypes'
 import type { Collection, IDType, InsertType, WhereClause } from 'dexie'
 
-export type UniversalOp = 'anyOf'
-export type ScalarOp = 'equals' | 'notEqual'
+export type EqualityOp = 'equals' | 'notEqual'
 export type NumberOrDateOp = 'below' | 'belowOrEqual' | 'above' | 'aboveOrEqual'
-export type PairNumberOrDateOp = 'between' | 'betweenIncludeLower' | 'betweenIncludeUpper' | 'betweenIncludeLowerAndUpper'
-export type ArrayOp = 'in' | 'notIn'
+export type RangeOp = 'between' | 'betweenIncludeLower' | 'betweenIncludeUpper' | 'betweenIncludeLowerAndUpper'
+export type InclusionOp = 'in' | 'notIn'
 export type StringOp = 'equalsIgnoreCase' | 'startsWith' | 'startsWithIgnoreCase'
-export type StringArrayOp = 'anyOfIgnoreCase'
+export type StringInclusionOp = 'anyOfIgnoreCase'
 
 export type DexieWhereClause<T, K extends keyof T = keyof T> = WhereClause<T, IDType<T, K>, InsertType<T, K>>
 
@@ -17,24 +16,22 @@ export type OpHandler<T, K extends keyof T> = {
 }
 
 export type FlatFieldCondition<T, F extends StringKeyOf<T> = StringKeyOf<T>> =
-  | { field: F, op: UniversalOp, value: AtLeastTwo<T[F]> }
-  | { field: F, op: ScalarOp, value: T[F] }
+  // | { field: F, op: EqualityOp, value: string | number | Date | (string | number | Date | (string | number | Date)[])[] }
+  | { field: F, op: EqualityOp, value: T[F] }
   | { field: F, op: StringOp, value: string }
-  | { field: F, op: StringArrayOp, value: string[] }
+  | { field: F, op: StringInclusionOp, value: string[] }
   | { field: F, op: NumberOrDateOp, value: number | Date }
-  | { field: F, op: ArrayOp, value: AtLeastTwo<T[F]> }
-  | { field: F, op: PairNumberOrDateOp, value: ExactlyTwo<number | Date> }
+  | { field: F, op: InclusionOp, value: AtLeastTwo<T[F]> }
+  | { field: F, op: RangeOp, value: ExactlyTwo<number | Date> }
 
-export type AnyOpValueMap<T> =
-  | SingleRecord<UniversalOp, AtLeastTwo<T>>
-  | SingleRecord<ScalarOp, ExactlyOne<T>>
-  | SingleRecord<ArrayOp, AtLeastTwo<T>>
+export type AnyOpValueMap<T> = SingleRecord<InclusionOp, AtLeastTwo<T>>
 
 export type OpValueMap<T> =
-  T extends string ? SingleRecord<StringOp, string> | AnyOpValueMap<T> :
-    T extends string[] ? SingleRecord<StringArrayOp, string[]> :
-      T extends number | Date ? SingleRecord<NumberOrDateOp, number | Date> | SingleRecord<PairNumberOrDateOp, ExactlyTwo<number | Date>> | AnyOpValueMap<T> :
-        AnyOpValueMap<T>
+  T extends string ? SingleRecord<StringOp, string> | SingleRecord<EqualityOp, ExactlyOne<T>> | AnyOpValueMap<T> :
+    T extends string[] ? SingleRecord<StringInclusionOp, T> | SingleRecord<EqualityOp, ExactlyOne<T>> |  AnyOpValueMap<T>:
+      T extends number | Date ? SingleRecord<NumberOrDateOp, T> | SingleRecord<RangeOp, ExactlyTwo<T>> | SingleRecord<EqualityOp, ExactlyOne<T>> | AnyOpValueMap<T> :
+        T extends (string | number | Date | (string | number | Date)[])[] ? SingleRecord<EqualityOp, T> | AnyOpValueMap<T> :
+          never
 
 export type NestedFieldCondition<T> = ExactlyOneKey<{
   [K in keyof T]: OpValueMap<T[K]>

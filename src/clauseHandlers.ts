@@ -3,18 +3,6 @@ import type { IndexableTypePart } from 'dexie'
 
 export const getClauseHandlers = <T, K extends keyof T>(condition: FlatFieldCondition<T>): OpHandler<T, K> => {
   switch (condition.op) {
-    case 'anyOf': return {
-      handleWhere: (clause) => clause.anyOf(condition.value as IndexableTypePart[]),
-      handleFilter: (objectValue) => {
-        if (objectValue instanceof Date) {
-          const mappedConditionValues = condition.value.map(d => (d as Date).getDate())
-
-          return mappedConditionValues.includes((objectValue as Date).getDate())
-        }
-
-        return condition.value.includes(objectValue)
-      },
-    }
     case 'anyOfIgnoreCase': return {
       handleWhere: (clause) => clause.anyOfIgnoreCase(condition.value),
       handleFilter: (objectValue) => {
