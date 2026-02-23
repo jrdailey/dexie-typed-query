@@ -2,6 +2,7 @@ import type { AtLeastTwo, ExactlyTwo } from '../src/utilityTypes'
 import type { DexieWhereClause, FlatFieldCondition } from '../src'
 import { getClauseHandlers } from '../src/clauseHandlers'
 
+// TODO: make sure to test all possible data types
 describe('getClauseHandlers', () => {
   type TestType = { testString: string, testNumber: number, testBoolean: boolean, testDate: Date }
 
