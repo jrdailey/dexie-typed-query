@@ -76,8 +76,20 @@ const result = await typedQuery(db.someTable).where({
   someField: { equals: 'test' }
 }, { offset: 5, limit 5, orderBy: { createdAt: 'desc' } })
 ```
-_Note: Both the queried field and `orderBy` field must be indexed fields. If a non-indexed field is used, Dexie will throw an error._
 
+### Retrieving All
+Retreive all objects in a table by calling the `all` function.
+
+```typescript
+await typedQuery(db.someTable).all()
+```
+
+Also accepts an optional query options object, e.g.:
+
+```typescript
+await typedQuery(db.someTable).all({ orderBy: { createdAt: 'desc' } })
+```
+_Note: The `orderBy` field must be an indexed field. If a non-indexed field is used, Dexie will throw an error._
 ### ANDing
 
 Multiple query objects can be ANDed together.
