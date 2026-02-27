@@ -798,11 +798,11 @@ describe('getClauseHandlers', () => {
     })
   })
 
-  describe('in', () => {
+  describe('anyOf', () => {
     describe('handleWhere', () => {
       const condition: FlatFieldCondition<TestType> = {
         field: 'testNumber',
-        op: 'in',
+        op: 'anyOf',
         value: [0, 5],
       }
 
@@ -850,20 +850,20 @@ describe('getClauseHandlers', () => {
       describe(testCase.describe, () => {
         const condition: FlatFieldCondition<TestType> = {
           field: testCase.field,
-          op: 'in',
+          op: 'anyOf',
           value: testCase.conditionValue,
         }
 
         describe('handleFilter', () => {
           const { handleFilter } = getClauseHandlers(condition)
 
-          it('returns true when the object value is between the lower and upper bounds (including lower and upper)', () => {
+          it('returns true when the object value exists in the condition value', () => {
             testCase.passValues.forEach(value => {
               expect(handleFilter(value)).toBe(true)
             })
           })
 
-          it('returns false when the object value is NOT between the lower and upper bounds (including lower and upper)', () => {
+          it('returns false when the object value is NOT in the condition value', () => {
             testCase.failValues.forEach(value => {
               expect(handleFilter(value)).toBe(false)
             })
@@ -873,11 +873,11 @@ describe('getClauseHandlers', () => {
     })
   })
 
-  describe('notIn', () => {
+  describe('noneOf', () => {
     describe('handleWhere', () => {
       const condition: FlatFieldCondition<TestType> = {
         field: 'testNumber',
-        op: 'notIn',
+        op: 'noneOf',
         value: [0, 5],
       }
 
@@ -925,7 +925,7 @@ describe('getClauseHandlers', () => {
       describe(testCase.describe, () => {
         const condition: FlatFieldCondition<TestType> = {
           field: testCase.field,
-          op: 'notIn',
+          op: 'noneOf',
           value: testCase.conditionValue,
         }
 

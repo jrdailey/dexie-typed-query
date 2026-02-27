@@ -36,8 +36,8 @@ describe.skip('FlatFieldCondition', () => {
 
 describe('AnyOpValue', () => {
   it('supports inclusion ops', () => {
-    expectTypeOf({ in: ['test1', 'test2'] as AtLeastTwo<string> }).toExtend<AnyOpValueMap<string>>()
-    expectTypeOf({ notIn: ['test1', 'test2'] as AtLeastTwo<string> }).toExtend<AnyOpValueMap<string>>()
+    expectTypeOf({ anyOf: ['test1', 'test2'] as AtLeastTwo<string> }).toExtend<AnyOpValueMap<string>>()
+    expectTypeOf({ noneOf: ['test1', 'test2'] as AtLeastTwo<string> }).toExtend<AnyOpValueMap<string>>()
   })
 })
 
@@ -57,8 +57,8 @@ describe('OpValueMap', () => {
     })
 
     it('accepts inclusion ops', () => {
-      expectTypeOf({ in: ['test1', 'test2'] as AtLeastTwo<string> }).toExtend<TestType>()
-      expectTypeOf({ notIn: ['test1', 'test2'] as AtLeastTwo<string> }).toExtend<TestType>()
+      expectTypeOf({ anyOf: ['test1', 'test2'] as AtLeastTwo<string> }).toExtend<TestType>()
+      expectTypeOf({ noneOf: ['test1', 'test2'] as AtLeastTwo<string> }).toExtend<TestType>()
     })
 
     it('rejects other operators', () => {
@@ -79,8 +79,8 @@ describe('OpValueMap', () => {
       expectTypeOf({ startsWithIgnoreCase: 1 }).not.toExtend<TestType>()
       expectTypeOf({ equals: 1 }).not.toExtend<TestType>()
       expectTypeOf({ notEqual: 1 }).not.toExtend<TestType>()
-      expectTypeOf({ in: [1, 2] as AtLeastTwo<number> }).not.toExtend<TestType>()
-      expectTypeOf({ notIn: [1, 2] as AtLeastTwo<number> }).not.toExtend<TestType>()
+      expectTypeOf({ anyOf: [1, 2] as AtLeastTwo<number> }).not.toExtend<TestType>()
+      expectTypeOf({ noneOf: [1, 2] as AtLeastTwo<number> }).not.toExtend<TestType>()
     })
 
     it('rejects dates', () => {
@@ -89,8 +89,8 @@ describe('OpValueMap', () => {
       expectTypeOf({ startsWithIgnoreCase: new Date() }).not.toExtend<TestType>()
       expectTypeOf({ equals: new Date() }).not.toExtend<TestType>()
       expectTypeOf({ notEqual: new Date() }).not.toExtend<TestType>()
-      expectTypeOf({ in: [new Date(), new Date()] as AtLeastTwo<Date> }).not.toExtend<TestType>()
-      expectTypeOf({ notIn: [new Date(), new Date()] as AtLeastTwo<Date> }).not.toExtend<TestType>()
+      expectTypeOf({ anyOf: [new Date(), new Date()] as AtLeastTwo<Date> }).not.toExtend<TestType>()
+      expectTypeOf({ noneOf: [new Date(), new Date()] as AtLeastTwo<Date> }).not.toExtend<TestType>()
     })
 
     it('rejects booleans', () => {
@@ -99,8 +99,8 @@ describe('OpValueMap', () => {
       expectTypeOf({ startsWithIgnoreCase: true }).not.toExtend<TestType>()
       expectTypeOf({ equals: true }).not.toExtend<TestType>()
       expectTypeOf({ notEqual: true }).not.toExtend<TestType>()
-      expectTypeOf({ in: [true, false] as AtLeastTwo<boolean> }).not.toExtend<TestType>()
-      expectTypeOf({ notIn: [true, false] as AtLeastTwo<boolean> }).not.toExtend<TestType>()
+      expectTypeOf({ anyOf: [true, false] as AtLeastTwo<boolean> }).not.toExtend<TestType>()
+      expectTypeOf({ noneOf: [true, false] as AtLeastTwo<boolean> }).not.toExtend<TestType>()
     })
   })
 
@@ -109,8 +109,8 @@ describe('OpValueMap', () => {
 
     it('accepts string inclusion ops', () => {
       expectTypeOf({ anyOfIgnoreCase: ['test1', 'test2'] }).toExtend<TestType>()
-      expectTypeOf({ in: [['test1', 'test2'], ['test3']] as AtLeastTwo<string[]> }).toExtend<TestType>()
-      expectTypeOf({ notIn: [['test1', 'test2'], ['test3']] as AtLeastTwo<string[]> }).toExtend<TestType>()
+      expectTypeOf({ anyOf: [['test1', 'test2'], ['test3']] as AtLeastTwo<string[]> }).toExtend<TestType>()
+      expectTypeOf({ noneOf: [['test1', 'test2'], ['test3']] as AtLeastTwo<string[]> }).toExtend<TestType>()
     })
 
     it('accepts equality ops', () => {
@@ -122,8 +122,8 @@ describe('OpValueMap', () => {
       expectTypeOf({ equalsIgnoreCase: 'test' }).not.toExtend<TestType>()
       expectTypeOf({ startsWith: 'test' }).not.toExtend<TestType>()
       expectTypeOf({ startsWithIgnoreCase: 'test' }).not.toExtend<TestType>()
-      expectTypeOf({ in: ['test1', 'test2'] }).not.toExtend<TestType>()
-      expectTypeOf({ notIn: ['test1', 'test2'] }).not.toExtend<TestType>()
+      expectTypeOf({ anyOf: ['test1', 'test2'] }).not.toExtend<TestType>()
+      expectTypeOf({ noneOf: ['test1', 'test2'] }).not.toExtend<TestType>()
       expectTypeOf({ below: 'test' }).not.toExtend<TestType>()
       expectTypeOf({ belowOrEqual: 'test' }).not.toExtend<TestType>()
       expectTypeOf({ above: 'test' }).not.toExtend<TestType>()
@@ -168,8 +168,8 @@ describe('OpValueMap', () => {
     })
 
     it('accepts inclusion ops', () => {
-      expectTypeOf({ in: [1, 2] as AtLeastTwo<number> }).toExtend<TestType>()
-      expectTypeOf({ notIn: [1, 2] as AtLeastTwo<number> }).toExtend<TestType>()
+      expectTypeOf({ anyOf: [1, 2] as AtLeastTwo<number> }).toExtend<TestType>()
+      expectTypeOf({ noneOf: [1, 2] as AtLeastTwo<number> }).toExtend<TestType>()
     })
 
     it('rejects other operators', () => {
@@ -194,8 +194,8 @@ describe('OpValueMap', () => {
       expectTypeOf({ betweenIncludeLowerAndUpper: [new Date(), new Date()] as ExactlyTwo<Date> }).not.toExtend<TestType>()
       expectTypeOf({ equals: new Date() }).not.toExtend<TestType>()
       expectTypeOf({ notEqual: new Date() }).not.toExtend<TestType>()
-      expectTypeOf({ in: [new Date(), new Date()] as AtLeastTwo<Date> }).not.toExtend<TestType>()
-      expectTypeOf({ notIn: [new Date(), new Date()] as AtLeastTwo<Date> }).not.toExtend<TestType>()
+      expectTypeOf({ anyOf: [new Date(), new Date()] as AtLeastTwo<Date> }).not.toExtend<TestType>()
+      expectTypeOf({ noneOf: [new Date(), new Date()] as AtLeastTwo<Date> }).not.toExtend<TestType>()
     })
 
     it('rejects strings', () => {
@@ -235,8 +235,8 @@ describe('OpValueMap', () => {
       expectTypeOf({ betweenIncludeLowerAndUpper: [new Date(), new Date()] as ExactlyTwo<Date> }).toExtend<TestType>()
       expectTypeOf({ equals: new Date() }).toExtend<TestType>()
       expectTypeOf({ notEqual: new Date() }).toExtend<TestType>()
-      expectTypeOf({ in: [new Date(), new Date()] as AtLeastTwo<Date> }).toExtend<TestType>()
-      expectTypeOf({ notIn: [new Date(), new Date()] as AtLeastTwo<Date> }).toExtend<TestType>()
+      expectTypeOf({ anyOf: [new Date(), new Date()] as AtLeastTwo<Date> }).toExtend<TestType>()
+      expectTypeOf({ noneOf: [new Date(), new Date()] as AtLeastTwo<Date> }).toExtend<TestType>()
     })
 
     it('accepts equality ops', () => {
@@ -245,8 +245,8 @@ describe('OpValueMap', () => {
     })
 
     it('accepts inclusion ops', () => {
-      expectTypeOf({ in: [new Date(), new Date()] as AtLeastTwo<Date> }).toExtend<TestType>()
-      expectTypeOf({ notIn: [new Date(), new Date()] as AtLeastTwo<Date> }).toExtend<TestType>()
+      expectTypeOf({ anyOf: [new Date(), new Date()] as AtLeastTwo<Date> }).toExtend<TestType>()
+      expectTypeOf({ noneOf: [new Date(), new Date()] as AtLeastTwo<Date> }).toExtend<TestType>()
     })
 
     it('rejects other operators', () => {
@@ -319,8 +319,8 @@ describe('OpValueMap', () => {
       expectTypeOf({ betweenIncludeLower: [1, 5] as ExactlyTwo<number> }).not.toExtend<TestType>()
       expectTypeOf({ betweenIncludeUpper: [1, 5] as ExactlyTwo<number> }).not.toExtend<TestType>()
       expectTypeOf({ betweenIncludeLowerAndUpper: [1, 5] as ExactlyTwo<number> }).not.toExtend<TestType>()
-      expectTypeOf({ in: [1, 5] }).not.toExtend<TestType>()
-      expectTypeOf({ notIn: [1, 5] }).not.toExtend<TestType>()
+      expectTypeOf({ anyOf: [1, 5] }).not.toExtend<TestType>()
+      expectTypeOf({ noneOf: [1, 5] }).not.toExtend<TestType>()
     })
 
     it('rejects strings', () => {
@@ -364,8 +364,8 @@ describe('OpValueMap', () => {
       expectTypeOf({ betweenIncludeLower: [1, 5] as ExactlyTwo<number> }).not.toExtend<TestType>()
       expectTypeOf({ betweenIncludeUpper: [1, 5] as ExactlyTwo<number> }).not.toExtend<TestType>()
       expectTypeOf({ betweenIncludeLowerAndUpper: [1, 5] as ExactlyTwo<number> }).not.toExtend<TestType>()
-      expectTypeOf({ in: [1, 5] }).not.toExtend<TestType>()
-      expectTypeOf({ notIn: [1, 5] }).not.toExtend<TestType>()
+      expectTypeOf({ anyOf: [1, 5] }).not.toExtend<TestType>()
+      expectTypeOf({ noneOf: [1, 5] }).not.toExtend<TestType>()
     })
 
     it('rejects numbers', () => {
@@ -409,8 +409,8 @@ describe('OpValueMap', () => {
       expectTypeOf({ betweenIncludeLower: [1, 5] as ExactlyTwo<number> }).not.toExtend<TestType>()
       expectTypeOf({ betweenIncludeUpper: [1, 5] as ExactlyTwo<number> }).not.toExtend<TestType>()
       expectTypeOf({ betweenIncludeLowerAndUpper: [1, 5] as ExactlyTwo<number> }).not.toExtend<TestType>()
-      expectTypeOf({ in: [1, 5] }).not.toExtend<TestType>()
-      expectTypeOf({ notIn: [1, 5] }).not.toExtend<TestType>()
+      expectTypeOf({ anyOf: [1, 5] }).not.toExtend<TestType>()
+      expectTypeOf({ noneOf: [1, 5] }).not.toExtend<TestType>()
     })
 
     it('rejects booleans', () => {
