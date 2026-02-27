@@ -4,7 +4,7 @@ import type { Collection, IDType, InsertType, WhereClause } from 'dexie'
 export type EqualityOp = 'equals' | 'notEqual'
 export type NumberOrDateOp = 'below' | 'belowOrEqual' | 'above' | 'aboveOrEqual'
 export type RangeOp = 'between' | 'betweenIncludeLower' | 'betweenIncludeUpper' | 'betweenIncludeLowerAndUpper'
-export type InclusionOp = 'in' | 'notIn'
+export type InclusionOp = 'anyOf' | 'noneOf'
 export type StringOp = 'equalsIgnoreCase' | 'startsWith' | 'startsWithIgnoreCase'
 export type StringInclusionOp = 'anyOfIgnoreCase'
 

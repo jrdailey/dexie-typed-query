@@ -102,7 +102,7 @@ export const getClauseHandlers = <T, K extends keyof T>(condition: FlatFieldCond
         return lower <= objectValue && objectValue <= upper
       },
     }
-    case 'in': return {
+    case 'anyOf': return {
       handleWhere: (clause) => clause.anyOf(condition.value as IndexableTypePart[]),
       handleFilter: (objectValue) => {
         if (objectValue instanceof Date) {
@@ -113,7 +113,7 @@ export const getClauseHandlers = <T, K extends keyof T>(condition: FlatFieldCond
         }
       },
     }
-    case 'notIn': return {
+    case 'noneOf': return {
       handleWhere: (clause) => clause.noneOf(condition.value as IndexableTypePart[]),
       handleFilter: (objectValue) => {
         if (objectValue instanceof Date) {

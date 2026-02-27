@@ -113,6 +113,7 @@ _Note: Each query object must be for an indexed field. If a non-indexed field is
 | ------------ | --------------------------------------------------- | --------------- |
 | `above` | Selects items where the field value is above the given lower bound | number, Date |
 | `aboveOrEqual` | Selects items where the field value is above or equal to the given lower bound | number, Date |
+| `anyOf` | Selects items where the field value contains any of the given values | string, number, Date, array of string/number/Date |
 | `anyOfIgnoreCase` | Selects items where the field value contains any of the given values, ignoring case | string |
 | `below` | Selects items where the field value is below the given upper bound | number, Date |
 | `belowOrEqual` | Selects items where the field value is below or equal to the given upper bound | number, Date |
@@ -122,8 +123,7 @@ _Note: Each query object must be for an indexed field. If a non-indexed field is
 | `betweenIncludeUpper` | Selects items where the field value is between the given lower and upper bounds, including the upper bound and excluding the lower bound | number, Date |
 | `equals` | Selects items where the field value is equal to the given value | string, number, Date, array of string/number/Date |
 | `equalsIgnoreCase` | Selects items where the field value is equal to the given value, ignoring case | string |
-| `in` | Selects items where the field value contains any of the given values | string, number, Date, array of string/number/Date |
-| `notEqual` | Selects items where the field value is NOT equal to the given value | string, number, Date, array of string/number/Date |
+| `noneOf` | Selects items where the field value is NOT equal to the given value | string, number, Date, array of string/number/Date |
 | `notIn` | Selects items where the field value does NOT contain any of the given values | string, number, Date, array of string/number/Date |
 | `startsWith` | Selects items where the field value starts with the given prefix | string |
 | `startsWithIgnoreCase` | Selects items where the field value starts with the given prefix, ignoring case | string |

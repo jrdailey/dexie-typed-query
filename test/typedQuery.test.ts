@@ -359,7 +359,7 @@ describe('typedQuery', () => {
     describe('in', () => {
       it('can query numbers', async () => {
         const result = await typedQuery(db.users).where({
-          loginAttempts: { in: [0, 1, 2, 5] },
+          loginAttempts: { anyOf: [0, 1, 2, 5] },
         })
 
         expect(result).toEqual([userTwo])
@@ -367,7 +367,7 @@ describe('typedQuery', () => {
 
       it('can query dates', async () => {
         const result = await typedQuery(db.users).where({
-          createdAt: { in: [daysFromNow(-5), daysFromNow(-1), userOne.createdAt] },
+          createdAt: { anyOf: [daysFromNow(-5), daysFromNow(-1), userOne.createdAt] },
         })
 
         expect(result).toEqual([userOne])
@@ -377,7 +377,7 @@ describe('typedQuery', () => {
     describe('notIn', () => {
       it('can query numbers', async () => {
         const result = await typedQuery(db.users).where({
-          loginAttempts: { notIn: [0, 1, 2, 4, 5] },
+          loginAttempts: { noneOf: [0, 1, 2, 4, 5] },
         })
 
         expect(result).toEqual([userOne])
@@ -385,7 +385,7 @@ describe('typedQuery', () => {
 
       it('can query dates', async () => {
         const result = await typedQuery(db.users).where({
-          createdAt: { notIn: [daysFromNow(-5), userOne.createdAt, userThree.createdAt] },
+          createdAt: { noneOf: [daysFromNow(-5), userOne.createdAt, userThree.createdAt] },
         })
 
         expect(result).toEqual([userTwo])
