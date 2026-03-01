@@ -1,6 +1,10 @@
 import type { FlatFieldCondition, OpHandler } from './interface'
 import type { IndexableTypePart } from 'dexie'
 
+const containsArray = <T>(arrayList: T[][], arrayToCheck: T[]) => {
+  return arrayList.map(v => JSON.stringify(v)).includes(JSON.stringify(arrayToCheck))
+}
+
 export const getClauseHandlers = <T, K extends keyof T>(condition: FlatFieldCondition<T>): OpHandler<T, K> => {
   switch (condition.op) {
     case 'anyOfIgnoreCase': return {
@@ -17,9 +21,11 @@ export const getClauseHandlers = <T, K extends keyof T>(condition: FlatFieldCond
       handleFilter: (objectValue) => {
         if (condition.value instanceof Date) {
           return (objectValue as Date).getDate() === (condition.value as Date).getDate()
+        } else if (objectValue instanceof Array && condition.value instanceof Array) {
+          return JSON.stringify(condition.value) === JSON.stringify(objectValue)
+        } else {
+          return objectValue === condition.value
         }
-
-        return objectValue === condition.value
       },
     }
     case 'equalsIgnoreCase': return {
@@ -108,6 +114,8 @@ export const getClauseHandlers = <T, K extends keyof T>(condition: FlatFieldCond
         if (objectValue instanceof Date) {
           return condition.value.map(d => (d as Date).getTime())
             .includes(objectValue.getTime())
+        } else if (objectValue instanceof Array && condition.value instanceof Array) {
+          return containsArray(condition.value as T[][], objectValue)
         } else {
           return condition.value.includes(objectValue)
         }
@@ -119,6 +127,8 @@ export const getClauseHandlers = <T, K extends keyof T>(condition: FlatFieldCond
         if (objectValue instanceof Date) {
           return condition.value.map(d => (d as Date).getTime())
             .includes(objectValue.getTime()) === false
+        } else if (objectValue instanceof Array && condition.value instanceof Array) {
+          return containsArray(condition.value as T[][], objectValue) === false
         } else {
           return condition.value.includes(objectValue) === false
         }

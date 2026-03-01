@@ -136,7 +136,6 @@ _Note: Each query object must be for an indexed field. If a non-indexed field is
 | `equals` | Selects items where the field value is equal to the given value | string, number, Date, array of string/number/Date |
 | `equalsIgnoreCase` | Selects items where the field value is equal to the given value, ignoring case | string |
 | `noneOf` | Selects items where the field value is NOT equal to the given value | string, number, Date, array of string/number/Date |
-| `notIn` | Selects items where the field value does NOT contain any of the given values | string, number, Date, array of string/number/Date |
 | `startsWith` | Selects items where the field value starts with the given prefix | string |
 | `startsWithIgnoreCase` | Selects items where the field value starts with the given prefix, ignoring case | string |
 

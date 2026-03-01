@@ -16,7 +16,6 @@ export type OpHandler<T, K extends keyof T> = {
 }
 
 export type FlatFieldCondition<T, F extends StringKeyOf<T> = StringKeyOf<T>> =
-  // | { field: F, op: EqualityOp, value: string | number | Date | (string | number | Date | (string | number | Date)[])[] }
   | { field: F, op: EqualityOp, value: T[F] }
   | { field: F, op: StringOp, value: string }
   | { field: F, op: StringInclusionOp, value: string[] }

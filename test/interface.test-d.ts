@@ -2,38 +2,6 @@ import type { AnyOpValueMap, OpValueMap } from '../src'
 import type { AtLeastTwo, ExactlyTwo } from '../src/utilityTypes'
 import { expectTypeOf } from 'vitest'
 
-// interface TestType {
-//   stringField: string,
-//   numberField: number,
-//   dateField: Date,
-//   booleanField: boolean,
-//   nullField: null,
-//   stringArrayField: string[],
-//   numberArrayField: number[],
-//   dateArrayField: Date[],
-//   nestedStringArrayField: string[][],
-//   nestedNumberArrayField: number[][],
-//   nestedDateArrayField: Date[][],
-// }
-
-// const testObject: TestType = {
-//   stringField: 'string',
-//   numberField: 10,
-//   dateField: new Date(),
-//   booleanField: true,
-//   nullField: null,
-//   stringArrayField: ['string1', 'string2'],
-//   numberArrayField: [1, 2, 3],
-//   dateArrayField: [new Date('01/01/2001'), new Date('11/11/2011')],
-//   nestedStringArrayField: [['string1', 'string2'], ['string3', 'string4']],
-//   nestedNumberArrayField: [[1, 2], [3, 4]],
-//   nestedDateArrayField: [[new Date(), new Date('01/01/2001')], [new Date('11/11/2011')]],
-// }
-
-describe.skip('FlatFieldCondition', () => {
-  // TODO add tests
-})
-
 describe('AnyOpValue', () => {
   it('supports inclusion ops', () => {
     expectTypeOf({ anyOf: ['test1', 'test2'] as AtLeastTwo<string> }).toExtend<AnyOpValueMap<string>>()

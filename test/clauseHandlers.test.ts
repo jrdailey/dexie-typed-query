@@ -2,9 +2,17 @@ import type { AtLeastTwo, ExactlyTwo } from '../src/utilityTypes'
 import type { DexieWhereClause, FlatFieldCondition } from '../src'
 import { getClauseHandlers } from '../src/clauseHandlers'
 
-// TODO: make sure to test all possible data types
 describe('getClauseHandlers', () => {
-  type TestType = { testString: string, testNumber: number, testBoolean: boolean, testDate: Date }
+  type TestType = {
+    testString: string,
+    testNumber: number,
+    testBoolean: boolean,
+    testDate: Date,
+    testStringArray: string[],
+    testNumberArray: number[],
+    testDateArray: Date[],
+    testMixedArray: (string | number | Date | (string | number | Date)[])[],
+  }
 
   /**
    * Defines a test case. Useful for testing filter handlers for ops that support multiple value types.
@@ -89,7 +97,7 @@ describe('getClauseHandlers', () => {
       })
     })
 
-    const filterTestCases: TestCase<string | number | Date>[] = [
+    const filterTestCases: TestCase[] = [
       {
         describe: 'handling strings',
         field: 'testString',
@@ -109,7 +117,35 @@ describe('getClauseHandlers', () => {
         field: 'testDate',
         conditionValue: new Date('01/01/2001'),
         passValues: [new Date('01/01/2001')],
-        failValues: [new Date(), new Date('11/11/2011')],
+        failValues: [new Date('10/10/2010'), new Date('11/11/2011')],
+      },
+      {
+        describe: 'handling string arrays',
+        field: 'testStringArray',
+        conditionValue: ['test1', 'test2'],
+        passValues: [['test1', 'test2']],
+        failValues: [[], ['test0'], ['test1', 'test3'], ['test2'], ['test2', 'test1']],
+      },
+      {
+        describe: 'handling number arrays',
+        field: 'testNumberArray',
+        conditionValue: [2, 3],
+        passValues: [[2, 3]],
+        failValues: [[4], [5, 6]],
+      },
+      {
+        describe: 'handling Date arrays',
+        field: 'testDateArray',
+        conditionValue: [new Date('11/11/2011'), new Date('12/12/2012')],
+        passValues: [[new Date('11/11/2011'), new Date('12/12/2012')]],
+        failValues: [[], [new Date()], [new Date('09/09/2009'), new Date('10/10/2010')], [new Date('12/12/2012')], new Date('11/11/2011')],
+      },
+      {
+        describe: 'handling mixed arrays',
+        field: 'testMixedArray',
+        conditionValue: [1, 'two', new Date('03/03/2003')],
+        passValues: [[1, 'two', new Date('03/03/2003')]],
+        failValues: [[], [new Date()], ['nope'], [-1], [1, 'two', new Date()], ['two', new Date('03/03/2003'), 1], [1, new Date('03/03/2003'), 'two']],
       },
     ]
 
@@ -843,6 +879,34 @@ describe('getClauseHandlers', () => {
         passValues: [new Date('01/01/2001'), new Date('11/11/2011')],
         failValues: [new Date(), new Date('12/12/2012')],
       },
+      {
+        describe: 'handling string arrays',
+        field: 'testStringArray',
+        conditionValue: [['test'], ['test1', 'test2'], ['test3']],
+        passValues: [['test'], ['test1', 'test2'], ['test3']],
+        failValues: [[], ['test0'], ['fail'], ['test2', 'test1']],
+      },
+      {
+        describe: 'handling number arrays',
+        field: 'testNumberArray',
+        conditionValue: [[1], [2, 3]],
+        passValues: [[1], [2, 3]],
+        failValues: [[], [4], [5, 6], [3, 2]],
+      },
+      {
+        describe: 'handling Date arrays',
+        field: 'testDateArray',
+        conditionValue: [[new Date('01/01/2001')], [new Date('11/11/2011'), new Date('12/12/2012')]],
+        passValues: [[new Date('01/01/2001')], [new Date('11/11/2011'), new Date('12/12/2012')]],
+        failValues: [[], [new Date()], [new Date('09/09/2009'), new Date('10/10/2010')], [new Date('12/12/2012'), new Date('11/11/2011')]],
+      },
+      {
+        describe: 'handling mixed arrays',
+        field: 'testMixedArray',
+        conditionValue: [[1, 'two', new Date('03/03/2003')], [0]],
+        passValues: [[1, 'two', new Date('03/03/2003')], [0]],
+        failValues: [[], [new Date()], ['nope'], [-1], [1, 'two', new Date()], ['two', 1, new Date('03/03/2003')], [new Date('03/03/2003'), 1, 'two']],
+      },
     ]
 
     filterTestCases.forEach(testCase => {
@@ -917,6 +981,34 @@ describe('getClauseHandlers', () => {
         conditionValue: [new Date('01/01/2001'), new Date('11/11/2011')],
         passValues: [new Date(), new Date('12/12/2012')],
         failValues: [new Date('01/01/2001'), new Date('11/11/2011')],
+      },
+      {
+        describe: 'handling string arrays',
+        field: 'testStringArray',
+        conditionValue: [['test'], ['test1', 'test2'], ['test3']],
+        passValues: [[], ['test0'], ['fail'], ['test2', 'test1']],
+        failValues: [['test'], ['test1', 'test2'], ['test3']],
+      },
+      {
+        describe: 'handling number arrays',
+        field: 'testNumberArray',
+        conditionValue: [[1], [2, 3]],
+        passValues: [[], [4], [5, 6], [3, 2]],
+        failValues: [[1], [2, 3]],
+      },
+      {
+        describe: 'handling Date arrays',
+        field: 'testDateArray',
+        conditionValue: [[new Date('01/01/2001')], [new Date('11/11/2011'), new Date('12/12/2012')]],
+        passValues: [[], [new Date()], [new Date('09/09/2009'), new Date('10/10/2010')], [new Date('12/12/2012'), new Date('11/11/2011')]],
+        failValues: [[new Date('01/01/2001')], [new Date('11/11/2011'), new Date('12/12/2012')]],
+      },
+      {
+        describe: 'handling mixed arrays',
+        field: 'testMixedArray',
+        conditionValue: [[1, 'two', new Date('03/03/2003')], [0]],
+        passValues: [[], [new Date()], ['nope'], [-1], [1, 'two', new Date()], ['two', 1, new Date('03/03/2003')], [new Date('03/03/2003'), 1, 'two']],
+        failValues: [[1, 'two', new Date('03/03/2003')], [0]],
       },
     ]
 
