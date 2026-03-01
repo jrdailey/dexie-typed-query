@@ -12,7 +12,7 @@ export const buildDb = (name: string = `TestDB-${Date.now()}`): TestDB => {
   const db = new Dexie(name) as TestDB
 
   db.version(1).stores({
-    users: '&id, createdAt, updatedAt, [name+dob], email, subscriptionStatus, loginAttempts',
+    users: '&id, createdAt, updatedAt, [name+dob], email, subscriptionStatus, loginAttempts, junkDrawer',
   })
 
   return db

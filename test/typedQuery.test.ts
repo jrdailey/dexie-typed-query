@@ -17,6 +17,7 @@ const userThree = buildUser({
   createdAt: now(),
   name: 'User Three',
   loginAttempts: 4,
+  junkDrawer: [1, 'two', new Date('03/03/2003'), ['nested']],
 })
 const seededUsers = [userOne, userTwo, userThree]
 
@@ -160,6 +161,14 @@ describe('typedQuery', () => {
         })
 
         expect(result).toEqual([userOne])
+      })
+
+      it('can query arrays', async () => {
+        const result = await typedQuery(db.users).where({
+          junkDrawer: { equals: [1, 'two', new Date('03/03/2003'), ['nested']] },
+        })
+
+        expect(result).toEqual([userThree])
       })
     })
 
@@ -356,7 +365,7 @@ describe('typedQuery', () => {
       })
     })
 
-    describe('in', () => {
+    describe('anyOf', () => {
       it('can query numbers', async () => {
         const result = await typedQuery(db.users).where({
           loginAttempts: { anyOf: [0, 1, 2, 5] },
@@ -372,9 +381,17 @@ describe('typedQuery', () => {
 
         expect(result).toEqual([userOne])
       })
+
+      it('can query arrays', async () => {
+        const result = await typedQuery(db.users).where({
+          junkDrawer: { anyOf: [[1, 'two', new Date('03/03/2003'), ['nested']], ['test']] },
+        })
+
+        expect(result).toEqual([userThree])
+      })
     })
 
-    describe('notIn', () => {
+    describe('noneOf', () => {
       it('can query numbers', async () => {
         const result = await typedQuery(db.users).where({
           loginAttempts: { noneOf: [0, 1, 2, 4, 5] },
@@ -389,6 +406,15 @@ describe('typedQuery', () => {
         })
 
         expect(result).toEqual([userTwo])
+      })
+
+      it('can query arrays', async () => {
+        const result = await typedQuery(db.users).where({
+          junkDrawer: { noneOf: [[1, 'two', new Date('03/03/2003'), ['nested']], ['test']] },
+        })
+
+        expect(result.length).toBe(2)
+        expect(result).toEqual(expect.arrayContaining([userOne, userTwo]))
       })
     })
 

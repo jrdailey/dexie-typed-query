@@ -16,6 +16,7 @@ export interface User {
   dob: Date,
   subscriptionStatus: SubscriptionStatus,
   loginAttempts: number,
+  junkDrawer: (string | number | Date | (string | number | Date)[])[],
 }
 
 export const buildUser = (overrides: Partial<User> = {}): User => {
@@ -30,6 +31,7 @@ export const buildUser = (overrides: Partial<User> = {}): User => {
     dob: daysFromNow(-1),
     subscriptionStatus: SubscriptionStatus.NotSubscribed,
     loginAttempts: 1,
+    junkDrawer: [],
     ...overrides,
   }
 }
