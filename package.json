@@ -1,17 +1,24 @@
 {
   "name": "dexie-typed-query",
   "version": "1.0.0",
-  "author": "Jon Dailey",
-  "license": "MIT",
-  "sideEffects": false,
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
+  "description": "A type-safe query interface for Dexie",
+  "keywords": [
+    "dexie",
+    "query",
+    "typescript",
+    "type-safe"
   ],
+  "homepage": "https://github.com/jrdailey/dexie-typed-query#readme",
+  "bugs": {
+    "url": "https://github.com/jrdailey/dexie-typed-query/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrdailey/dexie-typed-query.git"
+  },
+  "license": "MIT",
+  "author": "Jon Dailey",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -19,6 +26,16 @@
       "require": "./dist/index.cjs"
     }
   },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "test": "test"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
     "lint": "eslint .",
@@ -27,9 +44,6 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "typecheck": "npx tsc --noEmit"
-  },
-  "peerDependencies": {
-    "dexie": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.34.0",
@@ -45,5 +59,9 @@
     "typescript": "^5.9.3",
     "uuid": "^13.0.0",
     "vitest": "4.0.18"
-  }
+  },
+  "peerDependencies": {
+    "dexie": "^4.0.0"
+  },
+  "sideEffects": false
 }
