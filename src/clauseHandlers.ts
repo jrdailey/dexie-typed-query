@@ -23,8 +23,6 @@ export const getClauseHandlers = <T, K extends keyof T>(condition: FlatFieldCond
           return (objectValue as Date).getDate() === (condition.value as Date).getDate()
         } else if (objectValue instanceof Array && condition.value instanceof Array) {
           return JSON.stringify(condition.value) === JSON.stringify(objectValue)
-        } else {
-          return objectValue === condition.value
         }
       },
     }
