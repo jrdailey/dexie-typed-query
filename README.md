@@ -112,9 +112,9 @@ Multiple query objects can be ORed together.
 ```typescript
 const result = await typedQuery(db.users).where({
   or: [{
-    createdAt: { equals: userOne.createdAt },
+    createdAt: { below: new Date('03/01/2026') },
   }, {
-    name: { equals: userTwo.name },
+    name: { startsWith: 'Test' },
   }],
 })
 ```
