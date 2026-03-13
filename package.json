@@ -1,6 +1,6 @@
 {
   "name": "dexie-typed-query",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A type-safe query interface for Dexie",
   "keywords": [
     "dexie",
