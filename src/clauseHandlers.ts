@@ -20,7 +20,7 @@ export const getClauseHandlers = <T, K extends keyof T>(condition: FlatFieldCond
       handleWhere: (clause) => clause.equals(condition.value as IndexableTypePart),
       handleFilter: (objectValue) => {
         if (condition.value instanceof Date) {
-          return (objectValue as Date).getDate() === (condition.value as Date).getDate()
+          return (objectValue as Date).getTime() === (condition.value as Date).getTime()
         } else if (objectValue instanceof Array && condition.value instanceof Array) {
           return JSON.stringify(condition.value) === JSON.stringify(objectValue)
         } else {
@@ -38,7 +38,7 @@ export const getClauseHandlers = <T, K extends keyof T>(condition: FlatFieldCond
       handleWhere: (clause) => clause.notEqual(condition.value as IndexableTypePart[]),
       handleFilter: (objectValue) => {
         if (condition.value instanceof Date) {
-          return (objectValue as Date).getDate() !== (condition.value as Date).getDate()
+          return (objectValue as Date).getTime() !== (condition.value as Date).getTime()
         }
 
         return objectValue !== condition.value

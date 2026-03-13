@@ -117,7 +117,7 @@ describe('getClauseHandlers', () => {
         field: 'testDate',
         conditionValue: new Date('01/01/2001'),
         passValues: [new Date('01/01/2001')],
-        failValues: [new Date('10/10/2010'), new Date('11/11/2011')],
+        failValues: [new Date(), new Date('10/10/2010'), new Date('11/11/2011')],
       },
       {
         describe: 'handling string arrays',
