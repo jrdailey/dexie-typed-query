@@ -56,7 +56,7 @@
     "eslint-plugin-vitest": "^0.5.4",
     "fake-indexeddb": "^6.2.5",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "uuid": "^13.0.0",
     "vitest": "4.0.18"
   },
